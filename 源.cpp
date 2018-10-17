@@ -77,7 +77,13 @@ int main()
 	Mat sourceimage2 = imread("warp_1.jpg", 1);
 	Mat src1 = sourceimage1.clone();
 	Mat src2 = sourceimage2.clone();
-
+	Mat sourceimage3 = imread("D:\\hspj\\config\\me\\front.jpg");
+	Mat sourceimage4 = imread("D:\\hspj\\config\\me\\right.jpg");
+	Mat src3 = sourceimage3.clone();
+	Mat src4 = sourceimage4.clone();
+	vector<Mat> image1;
+	image1.push_back(sourceimage3);
+	image1.push_back(sourceimage4);
 
 	vector<Mat> images;
 	images.push_back(sourceimage1);
@@ -95,8 +101,12 @@ int main()
 	test(2, roiimages,gains);
 	for (int i = 0; i < 2; i++)
 	{
-		gainsapply(i, images[i], gains);
+		gainsapply(i, image1[i], gains);
 	}
+	imwrite("front1.jpg", image1[0]);
+	imwrite("left1.jpg", image1[1]);
+
+
 
 
 	return 0;
