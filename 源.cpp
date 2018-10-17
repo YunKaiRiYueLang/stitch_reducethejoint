@@ -32,7 +32,7 @@ void test(const int &num_images,   vector<cv::Mat> &images,Mat_<double> &gains)
 				for (int c = 0; c < images[0].cols; c++)
 				{
 					Isum1 += sqrt(static_cast<double>(sqr(r1[c]) + sqr(r1[c + 1]) + sqr(r1[c + 2])));
-					Isum2 += sqrt(static_cast<double>(sqr(r2[c]) + sqr(r2[c] + 1) + sqr(r2[c] + 2)));
+					Isum2 += sqrt(static_cast<double>(sqr(r2[c]) + sqr(r2[c + 1]) + sqr(r2[c + 2])));
 
 				}
 			}
@@ -89,8 +89,8 @@ int main()
 	images.push_back(sourceimage1);
 	images.push_back(sourceimage2);
 	// 已知的重合区域
-	Mat roiimage1 = sourceimage1(Range(50, 210), Range(370, 420));
-	Mat roiimage2 = sourceimage2(Range(50, 210), Range(350, 400));
+	Mat roiimage1 = sourceimage1(Range(50, 210), Range(340, 520));
+	Mat roiimage2 = sourceimage2(Range(50, 210), Range(360, 540));
 
 
 	vector<Mat> roiimages;
@@ -101,10 +101,10 @@ int main()
 	test(2, roiimages,gains);
 	for (int i = 0; i < 2; i++)
 	{
-		gainsapply(i, image1[i], gains);
+		gainsapply(i, images[i], gains);
 	}
-	imwrite("front1.jpg", image1[0]);
-	imwrite("left1.jpg", image1[1]);
+	imwrite("front1.jpg", images[0]);
+	imwrite("right1.jpg", images[1]);
 
 
 
