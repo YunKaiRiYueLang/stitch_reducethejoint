@@ -33,7 +33,6 @@ void test(const int &num_images,   vector<cv::Mat> &images,Mat_<double> &gains)
 				{
 					Isum1 += sqrt(static_cast<double>(sqr(r1[c]) + sqr(r1[c + 1]) + sqr(r1[c + 2])));
 					Isum2 += sqrt(static_cast<double>(sqr(r2[c]) + sqr(r2[c + 1]) + sqr(r2[c + 2])));
-
 				}
 			}
 			I(i, j) = Isum1 / N(i, j);
@@ -41,16 +40,23 @@ void test(const int &num_images,   vector<cv::Mat> &images,Mat_<double> &gains)
 
 		}
 	}
+
+
+
 	double alpha = 0.01;   
 	double beta = 100;    
 
 	Mat_<double> A(num_images, num_images); A.setTo(0);
 	Mat_<double> b(num_images, 1); b.setTo(0);
 
+
+
+	// 明天自己解这个方程，看结果。
 	for (int i = 0; i < num_images; ++i)
 	{
 		for (int j = 0; j < num_images; ++j)
 		{
+			//std::cout << b(i, 0) << std::endl;
 			b(i, 0) += beta * N(i, j);
 			A(i, i) += beta * N(i, j);
 			if (j == i) continue;
@@ -59,6 +65,11 @@ void test(const int &num_images,   vector<cv::Mat> &images,Mat_<double> &gains)
 		}
 
 	}
+	std::cout << "A:" << std::endl;
+	std::cout << A(0, 0) << " " << A(0, 1) << std::endl;
+	std::cout << A(1, 0) << " " << A(1, 1) << std::endl;
+	std::cout << "b" << std::endl;
+	std::cout << b(0, 0) << " " << b(1, 0) << std::endl;
 	solve(A, b, gains);
 	
 
@@ -89,8 +100,8 @@ int main()
 	images.push_back(sourceimage1);
 	images.push_back(sourceimage2);
 	// 已知的重合区域
-	Mat roiimage1 = sourceimage1(Range(50, 210), Range(340, 520));
-	Mat roiimage2 = sourceimage2(Range(50, 210), Range(360, 540));
+	Mat roiimage1 = sourceimage1(Range(50,170), Range(340, 520));
+	Mat roiimage2 = sourceimage2(Range(50, 170), Range(360, 540));
 
 
 	vector<Mat> roiimages;
