@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
 
 	Mat stitchleft=left(Range(0,220),Range(337,397)).clone();
 	Mat stitchright = right(Range(0,220),Range(353,413)).clone();
-	dst = right(Range(0,220), Range(350,370));
+	dst = right(Range(0,220), Range(350,410));
 	OptimizeSeam(stitchleft, stitchright, dst);
 
 
